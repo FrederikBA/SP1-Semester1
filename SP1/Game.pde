@@ -13,13 +13,13 @@ class Game
   private Dot[] food;
 
 
-  Game(int width, int height, int numberOfEnemies)
+  Game(int width, int height, int numberOfDots)
   {
     if (width < 10 || height < 10)
     {
       throw new IllegalArgumentException("Width and height must be at least 10");
     }
-    if (numberOfEnemies < 0)
+    if (numberOfDots < 0)
     {
       throw new IllegalArgumentException("Number of enemies must be positive");
     } 
@@ -29,11 +29,15 @@ class Game
     this.height = height;
     keys = new Keys();
     player = new Dot(0, 0, width-1, height-1);
-    enemies = new Dot[numberOfEnemies];
-    food = new Dot[numberOfEnemies];
-    for (int i = 0; i < numberOfEnemies; ++i)
+    enemies = new Dot[numberOfDots];
+    food = new Dot[numberOfDots];
+    for (int i = 0; i < numberOfDots; ++i)
     {
       enemies[i] = new Dot(width-1, height-1, width-1, height-1);
+    }
+    for (int i = 0; i < numberOfDots; ++i)
+    {
+      food[i] = new Dot(width/2, height/2, width/2, height/2);
     }
     this.playerLife = 100;
   }
@@ -68,7 +72,8 @@ class Game
     updatePlayer();
     updateEnemies();
     updateFood();
-    checkForCollisions();
+    checkEnemyCollisions();
+    checkFoodCollisions();
     clearBoard();
     populateBoard();
   }
@@ -235,7 +240,7 @@ class Game
     }
   }
 
-  private void checkForCollisions()
+  private void checkEnemyCollisions()
   {
     //Check enemy collisions
     for (int i = 0; i < enemies.length; ++i)
@@ -244,6 +249,18 @@ class Game
       {
         //We have a collision
         --playerLife;
+      }
+    }
+  }
+
+  private void checkFoodCollisions() {
+    //Check food collisions
+    for (int i = 0; i < food.length; ++i) {
+
+      if (playerLife < 100 && food[i].getX() == player.getX() && food[i].getY() == player.getY()) {
+
+        //We have a collision
+        ++playerLife;
       }
     }
   }
