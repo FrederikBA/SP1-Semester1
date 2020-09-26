@@ -8,7 +8,9 @@ class Game
   private int[][] board;
   private Keys keys;
   private int playerLife;
+  private int player2Life;
   private Dot player;
+  private Dot player2;
   private Dot[] enemies;
   private Dot[] food;
 
@@ -29,6 +31,7 @@ class Game
     this.height = height;
     keys = new Keys();
     player = new Dot(0, 0, width-1, height-1);
+    player2 = new Dot(0,0,width+800, height-1);
     enemies = new Dot[numberOfDots];
     food = new Dot[numberOfDots];
     for (int i = 0; i < numberOfDots; ++i)
@@ -40,6 +43,7 @@ class Game
       food[i] = new Dot(width/2, height/2, width/2, height/2);
     }
     this.playerLife = 100;
+    this.player2Life = 100;
   }
 
   public int getWidth()
@@ -56,24 +60,42 @@ class Game
   {
     return playerLife;
   }
-
-  public void onKeyPressed(char ch)
+  
+    public int getPlayer2Life()
   {
-    keys.onKeyPressed(ch);
+    return player2Life;
   }
 
-  public void onKeyReleased(char ch)
+  public void onKeyPressedPlayer(char ch)
   {
-    keys.onKeyReleased(ch);
+    keys.onKeyPressedPlayer(ch);
   }
+
+  public void onKeyReleasedPlayer(char ch)
+  {
+    keys.onKeyReleasedPlayer(ch);
+  }
+  
+  public void onKeyPressedPlayer2(char ch)
+  {
+    keys.onKeyPressedPlayer2(ch);
+  }
+  
+  public void onKeyReleasedPlayer2(char ch)
+  {
+    keys.onKeyReleasedPlayer2(ch);
+  }
+  
 
   public void update()
   {
     updatePlayer();
-    updateEnemies();
-    updateFood();
+    updatePlayer2();
+    //updateEnemies();
+    //updateFood();
     checkEnemyCollisions();
-    checkFoodCollisions();
+    foodAddLife();
+    removeFood();
     clearBoard();
     populateBoard();
   }
@@ -115,6 +137,27 @@ class Game
     if (keys.dDown() && !keys.aDown())
     {
       player.moveRight();
+    }
+  }
+
+private void updatePlayer2()
+  {
+    //Update player
+    if (keys.iDown() && !keys.kDown())
+    {
+      player2.moveUp();
+    }
+    if (keys.jDown() && !keys.lDown())
+    {
+      player2.moveLeft();
+    }
+    if (keys.kDown() && !keys.iDown())
+    {
+      player2.moveDown();
+    }
+    if (keys.lDown() && !keys.jDown())
+    {
+      player2.moveRight();
     }
   }
 
@@ -230,8 +273,9 @@ class Game
 
   private void populateBoard()
   {
-    //Insert player
+    //Insert players
     board[player.getX()][player.getY()] = 1;
+    board[player2.getX()][player2.getY()] = 4;
     //Insert enemies and food
     for (int i = 0; i < enemies.length; ++i)
     {
@@ -253,7 +297,7 @@ class Game
     }
   }
 
-  private void checkFoodCollisions() {
+  private void foodAddLife() {
     //Check food collisions
     for (int i = 0; i < food.length; ++i) {
 
@@ -261,6 +305,16 @@ class Game
 
         //We have a collision
         ++playerLife;
+      }
+    }
+  }
+  private void removeFood() {
+    //Check food collisions
+    for (int i = 0; i < food.length; ++i) {
+
+      if (playerLife < 100 && food[i].getX() == player.getX() && food[i].getY() == player.getY()) {
+
+        //We have a collision
       }
     }
   }
