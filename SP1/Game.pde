@@ -13,15 +13,15 @@ class Game
   private Dot player2;
   private Dot[] enemies;
   private Dot[] food;
+  private int maxLife = 100;
 
-
-  Game(int width, int height, int numberOfDots)
+  Game(int width, int height, int numberOfEnemies, int numberOfFood)
   {
     if (width < 10 || height < 10)
     {
       throw new IllegalArgumentException("Width and height must be at least 10");
     }
-    if (numberOfDots < 0)
+    if (numberOfEnemies < 0)
     {
       throw new IllegalArgumentException("Number of enemies must be positive");
     } 
@@ -31,14 +31,14 @@ class Game
     this.height = height;
     keys = new Keys();
     player = new Dot(4, 0, width-1, height-1);
-    player2 = new Dot(20,0,width-1, height-1);
-    enemies = new Dot[numberOfDots];
-    food = new Dot[numberOfDots];
-    for (int i = 0; i < numberOfDots; ++i)
+    player2 = new Dot(20, 0, width-1, height-1);
+    enemies = new Dot[numberOfEnemies];
+    food = new Dot[numberOfFood];
+    for (int i = 0; i < numberOfEnemies; ++i)
     {
       enemies[i] = new Dot(width-13, height-3, width-1, height-1);
     }
-    for (int i = 0; i < numberOfDots; ++i)
+    for (int i = 0; i < numberOfFood; ++i)
     {
       food[i] = new Dot(width/2, height/2, width/2, height/2);
     }
@@ -60,8 +60,8 @@ class Game
   {
     return playerLife;
   }
-  
-    public int getPlayer2Life()
+
+  public int getPlayer2Life()
   {
     return player2Life;
   }
@@ -75,27 +75,29 @@ class Game
   {
     keys.onKeyReleasedPlayer(ch);
   }
-  
+
   public void onKeyPressedPlayer2(char ch)
   {
     keys.onKeyPressedPlayer2(ch);
   }
-  
+
   public void onKeyReleasedPlayer2(char ch)
   {
     keys.onKeyReleasedPlayer2(ch);
   }
-  
+
 
   public void update()
   {
     updatePlayer();
     updatePlayer2();
-   // updateEnemies();
-   // updateFood();
-    checkEnemyCollisions();
-    foodAddLife();
-    removeFood();
+    updateEnemies();
+    updateFood();
+    checkEnemyCollisionsForPlayer();
+    checkEnemyCollisionsForPlayer2();
+    foodAddLifeForPlayer();
+    foodAddLifeForPlayer2();
+    repositionFood();
     clearBoard();
     populateBoard();
   }
@@ -140,7 +142,7 @@ class Game
     }
   }
 
-private void updatePlayer2()
+  private void updatePlayer2()
   {
     //Update player
     if (keys.iDown() && !keys.kDown())
@@ -276,16 +278,20 @@ private void updatePlayer2()
     //Insert players
     board[player.getX()][player.getY()] = 1;
     board[player2.getX()][player2.getY()] = 4;
-    
-    //Insert enemies and food
+
+    //Insert enemies
     for (int i = 0; i < enemies.length; ++i)
     {
       board[enemies[i].getX()][enemies[i].getY()] = 2;
+    }
+    //Insert food
+    for (int i = 0; i< food.length; ++i)
+    {
       board[food[i].getX()][food[i].getY()] = 3;
     }
   }
 
-  private void checkEnemyCollisions()
+  private void checkEnemyCollisionsForPlayer()
   {
     //Check enemy collisions for player 1.
     for (int i = 0; i < enemies.length; ++i)
@@ -298,7 +304,21 @@ private void updatePlayer2()
     }
   }
 
-  private void foodAddLife() {
+  private void checkEnemyCollisionsForPlayer2()
+  {
+    //Check enemy collisions for player 2.
+    for (int i = 0; i < enemies.length; ++i)
+    {
+      if (enemies[i].getX() == player2.getX() && enemies[i].getY() == player2.getY())
+      {
+        //We have a collision
+        --player2Life;
+      }
+    }
+  }
+
+
+  private void foodAddLifeForPlayer() {
     //Check food collisions for player 1
     for (int i = 0; i < food.length; ++i) {
 
@@ -309,11 +329,24 @@ private void updatePlayer2()
       }
     }
   }
-  private void removeFood() {
+
+  private void foodAddLifeForPlayer2() {
+    //Check food collisions for player 2
+    for (int i = 0; i < food.length; ++i) {
+
+      if (player2Life < maxLife && food[i].getX() == player2.getX() && food[i].getY() == player2.getY()) {
+
+        //We have a collision
+        ++player2Life;
+      }
+    }
+  }
+
+  private void repositionFood() {
     //Check food collisions
     for (int i = 0; i < food.length; ++i) {
 
-      if (playerLife < 100 && food[i].getX() == player.getX() && food[i].getY() == player.getY()) {
+      if (playerLife < maxLife && food[i].getX() == player.getX() && food[i].getY() == player.getY()) {
 
         //We have a collision
       }
