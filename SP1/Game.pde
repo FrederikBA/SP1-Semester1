@@ -30,13 +30,13 @@ class Game
     this.width = width;
     this.height = height;
     keys = new Keys();
-    player = new Dot(0, 0, width-1, height-1);
-    player2 = new Dot(0,0,width+800, height-1);
+    player = new Dot(4, 0, width-1, height-1);
+    player2 = new Dot(20,0,width-1, height-1);
     enemies = new Dot[numberOfDots];
     food = new Dot[numberOfDots];
     for (int i = 0; i < numberOfDots; ++i)
     {
-      enemies[i] = new Dot(width-1, height-1, width-1, height-1);
+      enemies[i] = new Dot(width-13, height-3, width-1, height-1);
     }
     for (int i = 0; i < numberOfDots; ++i)
     {
@@ -91,8 +91,8 @@ class Game
   {
     updatePlayer();
     updatePlayer2();
-    //updateEnemies();
-    //updateFood();
+   // updateEnemies();
+   // updateFood();
     checkEnemyCollisions();
     foodAddLife();
     removeFood();
@@ -276,6 +276,7 @@ private void updatePlayer2()
     //Insert players
     board[player.getX()][player.getY()] = 1;
     board[player2.getX()][player2.getY()] = 4;
+    
     //Insert enemies and food
     for (int i = 0; i < enemies.length; ++i)
     {
@@ -286,7 +287,7 @@ private void updatePlayer2()
 
   private void checkEnemyCollisions()
   {
-    //Check enemy collisions
+    //Check enemy collisions for player 1.
     for (int i = 0; i < enemies.length; ++i)
     {
       if (enemies[i].getX() == player.getX() && enemies[i].getY() == player.getY())
@@ -298,7 +299,7 @@ private void updatePlayer2()
   }
 
   private void foodAddLife() {
-    //Check food collisions
+    //Check food collisions for player 1
     for (int i = 0; i < food.length; ++i) {
 
       if (playerLife < 100 && food[i].getX() == player.getX() && food[i].getY() == player.getY()) {

@@ -85,7 +85,7 @@ class Keys
 
   void onKeyPressedPlayer2(char k) {
     if (k=='j' || k=='J') {
-      kDown=true;
+      jDown=true;
     }
     if (k=='k' || k=='K') {
       kDown=true;
