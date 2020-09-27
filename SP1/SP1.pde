@@ -31,7 +31,7 @@ void draw()
   game.update();
   background(0);
   drawBoard();
-  if (game.playerLife==0 || game.player2Life==0) {
+  if (game.playerLife <=0 || game.player2Life <=0) {
     textFont(font, 40);
     if (game.player2Life == 0) {
       text("PLAYER 1 WON", 350, height/2);

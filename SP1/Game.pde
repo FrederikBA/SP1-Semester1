@@ -165,19 +165,19 @@ class Game
   private void updatePlayer2()
   {
     //Update player
-    if (keys.UPDown() && !keys.UPDown())
+    if (keys.iDown() && !keys.kDown())
     {
       player2.moveUp();
     }
-    if (keys.LEFTDown() && !keys.LEFTDown())
+    if (keys.jDown() && !keys.lDown())
     {
       player2.moveLeft();
     }
-    if (keys.DOWNDown() && !keys.DOWNDown())
+    if (keys.kDown() && !keys.iDown())
     {
       player2.moveDown();
     }
-    if (keys.RIGHTDown() && !keys.RIGHTDown())
+    if (keys.lDown() && !keys.jDown())
     {
       player2.moveRight();
     }
