@@ -29,7 +29,7 @@ void keyPressed()
 void draw()
 {
   game.update();
-  background(0); //Black
+  background(0);
   drawBoard();
   if (game.playerLife==0 || game.player2Life==0) {
     textFont(font, 40);
