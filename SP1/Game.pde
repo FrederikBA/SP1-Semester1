@@ -12,10 +12,11 @@ class Game
   private Dot player;
   private Dot player2;
   private Dot[] enemies;
+  private Dot[] enemies2;
   private Dot[] food;
   private int maxLife = 100;
 
-  Game(int width, int height, int numberOfEnemies, int numberOfFood)
+  Game(int width, int height, int numberOfEnemies, int numberOfEnemies2, int numberOfFood)
   {
     if (width < 10 || height < 10)
     {
@@ -33,10 +34,15 @@ class Game
     player = new Dot(4, 0, width-1, height-1);
     player2 = new Dot(20, 0, width-1, height-1);
     enemies = new Dot[numberOfEnemies];
+    enemies2 = new Dot[numberOfEnemies2];
     food = new Dot[numberOfFood];
     for (int i = 0; i < numberOfEnemies; ++i)
     {
       enemies[i] = new Dot(width-13, height-3, width-1, height-1);
+    }
+    for (int i = 0; i < numberOfEnemies2; ++i)
+    {
+      enemies2[i] = new Dot(width-13, height-3, width-1, height-1);
     }
     for (int i = 0; i < numberOfFood; ++i)
     {
@@ -91,6 +97,7 @@ class Game
   {
     updatePlayer();
     updatePlayer2();
+    updateEnemies2();
     updateEnemies();
     updateFood();
     checkEnemyCollisionsForPlayer();
@@ -174,6 +181,7 @@ class Game
         //We follow
         int dx = player.getX() - enemies[i].getX();
         int dy = player.getY() - enemies[i].getY();
+
         if (abs(dx) > abs(dy))
         {
           if (dx > 0)
@@ -213,6 +221,62 @@ class Game
         {
           //Move down
           enemies[i].moveDown();
+        }
+      }
+    }
+  }
+  
+   private void updateEnemies2()
+  {
+    for (int i = 0; i < enemies2.length; ++i)
+    {
+      //Should we follow or move randomly?
+      //2 out of 3 we will follow..
+      if (rnd.nextInt(3) < 2)
+      {
+        //We follow
+        int dx = player2.getX() - enemies2[i].getX();
+        int dy = player2.getY() - enemies2[i].getY();
+
+        if (abs(dx) > abs(dy))
+        {
+          if (dx > 0)
+          {
+            //Player is to the right
+            enemies2[i].moveRight();
+          } else
+          {
+            //Player is to the left
+            enemies2[i].moveLeft();
+          }
+        } else if (dy > 0)
+        {
+          //Player is down;
+          enemies2[i].moveDown();
+        } else
+        {//Player is up;
+          enemies2[i].moveUp();
+        }
+      } else
+      {
+        //We move randomly
+        int move = rnd.nextInt(4);
+        if (move == 0)
+        {
+          //Move right
+          enemies2[i].moveRight();
+        } else if (move == 1)
+        {
+          //Move left
+          enemies2[i].moveLeft();
+        } else if (move == 2)
+        {
+          //Move up
+          enemies2[i].moveUp();
+        } else if (move == 3)
+        {
+          //Move down
+          enemies2[i].moveDown();
         }
       }
     }
@@ -283,6 +347,11 @@ class Game
     for (int i = 0; i < enemies.length; ++i)
     {
       board[enemies[i].getX()][enemies[i].getY()] = 2;
+    }
+    //Insert enemies2
+    for (int i = 0; i < enemies2.length; ++i)
+    {
+      board[enemies2[i].getX()][enemies2[i].getY()] = 2;
     }
     //Insert food
     for (int i = 0; i< food.length; ++i)

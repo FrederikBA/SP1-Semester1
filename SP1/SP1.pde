@@ -10,7 +10,7 @@
 import java.util.Random;
 import java.util.ArrayList;
 
-Game game = new Game(25, 25, 5,1);
+Game game = new Game(25, 25, 3, 3, 1);
 PFont font;
 
 public void settings() {
