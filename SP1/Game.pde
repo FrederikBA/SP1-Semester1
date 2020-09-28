@@ -104,10 +104,10 @@ class Game
     if (gameend != true) {
       updatePlayer();
       updatePlayer2();
-      updateEnemies2();
-      updateEnemies();
-      updateFood();
-      updateFood2();
+      //updateEnemies2();
+      //updateEnemies();
+      //updateFood();
+      //updateFood2();
       checkEnemyCollisionsForPlayer();
       checkEnemyCollisionsForPlayer2();
       foodAddLifeForPlayer();
@@ -441,17 +441,17 @@ class Game
     {
       if (enemies[i].getX() == player.getX() && enemies[i].getY() == player.getY())
       {
-        //We have a collision
-        --playerLife;
+        if (playerLife > 0) --playerLife;
       }
     }
+    
     //Check enemy2 collisions for player 1.
     for (int i = 0; i < enemies2.length; ++i)
     {
       if (enemies2[i].getX() == player.getX() && enemies2[i].getY() == player.getY())
       {
         //We have a collision
-        --playerLife;
+        if (playerLife > 0) --playerLife;
       }
     }
   }
@@ -464,16 +464,17 @@ class Game
       if (enemies[i].getX() == player2.getX() && enemies[i].getY() == player2.getY())
       {
         //We have a collision
-        --player2Life;
+        if (player2Life > 0) --player2Life;
       }
     }
+    
     //Check enemy2 collisions for player 2.
     for (int i = 0; i < enemies2.length; ++i)
     {
       if (enemies2[i].getX() == player2.getX() && enemies2[i].getY() == player2.getY())
       {
         //We have a collision
-        --player2Life;
+        if (player2Life > 0) --player2Life;
       }
     }
   }
