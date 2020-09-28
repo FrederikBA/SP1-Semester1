@@ -17,13 +17,13 @@ void setup()
 void keyReleased()
 {
   game.onKeyReleasedPlayer(key);
-  game.onKeyReleasedPlayer2(key);
+  game.onKeyReleasedPlayer2();
 }
 
 void keyPressed()
 {
   game.onKeyPressedPlayer(key);
-  game.onKeyPressedPlayer2(key);
+  game.onKeyPressedPlayer2();
 }
 
 void draw()

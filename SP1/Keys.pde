@@ -8,6 +8,10 @@ class Keys
   private boolean jDown = false;
   private boolean kDown = false;
   private boolean lDown = false;
+  private boolean arrowDown = false;
+  private boolean arrowUp = false;
+  private boolean arrowRight = false;
+  private boolean arrowLeft = false;
 
   public Keys() {
   }
@@ -51,7 +55,25 @@ class Keys
     return lDown;
   }
 
+  public boolean arrowDown()
+  {
+    return arrowDown;
+  }
 
+  public boolean arrowUp()
+  {
+    return arrowUp;
+  }
+
+  public boolean arrowLeft()
+  {
+    return arrowLeft;
+  }
+
+  public boolean arrowRight()
+  {
+    return arrowRight;
+  }
 
   void onKeyPressedPlayer(char k) {
     if (k=='a' || k=='A') {
@@ -83,33 +105,37 @@ class Keys
     }
   }
 
-  void onKeyPressedPlayer2(char k) {
-    if (k=='j' || k=='J') {
-      jDown=true;
-    }
-    if (k=='k' || k=='K') {
-      kDown=true;
-    }
-    if (k=='i' || k=='I') {
-      iDown=true;
-    }
-    if (k=='l' || k=='L') {
-      lDown=true;
+  void onKeyPressedPlayer2() {
+    if (key == CODED) {
+      if (keyCode == LEFT) {
+        arrowLeft = true;
+      }
+      if (keyCode == RIGHT) {
+        arrowRight = true;
+      }
+      if (keyCode == UP) {
+        arrowUp = true;
+      }
+      if (keyCode == DOWN) {
+        arrowDown = true;
+      }
     }
   }
 
-  void onKeyReleasedPlayer2(char k) {
-    if (k=='j' || k=='J') {
-      jDown=false;
-    }
-    if (k=='k' || k=='K') {
-      kDown=false;
-    }
-    if (k=='i' || k=='I') {
-      iDown=false;
-    }
-    if (k=='l' || k=='L') {
-      lDown=false;
+  void onKeyReleasedPlayer2() {
+    if (key == CODED) {
+      if (keyCode == LEFT) {
+        arrowLeft = false;
+      }
+      if (keyCode == RIGHT) {
+        arrowRight = false;
+      }
+      if (keyCode == UP) {
+        arrowUp = false;
+      }
+      if (keyCode == DOWN) {
+        arrowDown = false;
+      }
     }
   }
 }

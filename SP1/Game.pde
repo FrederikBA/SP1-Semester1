@@ -88,14 +88,14 @@ class Game
     keys.onKeyReleasedPlayer(ch);
   }
 
-  public void onKeyPressedPlayer2(char ch)
+  public void onKeyPressedPlayer2()
   {
-    keys.onKeyPressedPlayer2(ch);
+    keys.onKeyPressedPlayer2();
   }
 
-  public void onKeyReleasedPlayer2(char ch)
+  public void onKeyReleasedPlayer2()
   {
-    keys.onKeyReleasedPlayer2(ch);
+    keys.onKeyReleasedPlayer2();
   }
 
 
@@ -144,19 +144,19 @@ class Game
   private void updatePlayer()
   {
     //Update player
-    if (keys.wDown() && !keys.sDown())
+    if (keys.wDown())
     {
       player.moveUp();
     }
-    if (keys.aDown() && !keys.dDown())
+    if (keys.aDown())
     {
       player.moveLeft();
     }
-    if (keys.sDown() && !keys.wDown())
+    if (keys.sDown())
     {
       player.moveDown();
     }
-    if (keys.dDown() && !keys.aDown())
+    if (keys.dDown())
     {
       player.moveRight();
     }
@@ -165,19 +165,19 @@ class Game
   private void updatePlayer2()
   {
     //Update player
-    if (keys.iDown() && !keys.kDown())
+    if (keys.arrowUp())
     {
       player2.moveUp();
     }
-    if (keys.jDown() && !keys.lDown())
+    if (keys.arrowLeft())
     {
       player2.moveLeft();
     }
-    if (keys.kDown() && !keys.iDown())
+    if (keys.arrowDown())
     {
       player2.moveDown();
     }
-    if (keys.lDown() && !keys.jDown())
+    if (keys.arrowRight())
     {
       player2.moveRight();
     }
