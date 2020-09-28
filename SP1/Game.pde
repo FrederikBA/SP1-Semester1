@@ -103,10 +103,10 @@ class Game
     if (gameend != true) {
       updatePlayer();
       updatePlayer2();
-      //updateEnemies2();
-      //updateEnemies();
-      //updateFood();
-      //updateFood2();
+      updateEnemies();
+      updateEnemies2();
+      updateFood();
+      updateFood2();
       checkEnemyCollisionsForPlayer();
       checkEnemyCollisionsForPlayer2();
       checkFoodCollisionForPlayer();
@@ -480,7 +480,7 @@ class Game
     //Check food collisions for player 1
     for (int i = 0; i < food.length; ++i) {
 
-      if (playerLife < 100 && food[i].getX() == player.getX() && food[i].getY() == player.getY()) {
+      if (playerLife < maxLife && food[i].getX() == player.getX() && food[i].getY() == player.getY()) {
 
         //We have a collision
         ++playerLife;
@@ -491,7 +491,7 @@ class Game
     //Check food2 collisions for player 1
     for (int i = 0; i < food2.length; ++i) {
 
-      if (playerLife < 100 && food2[i].getX() == player.getX() && food2[i].getY() == player.getY()) {
+      if (playerLife < maxLife && food2[i].getX() == player.getX() && food2[i].getY() == player.getY()) {
 
         //We have a collision
         ++playerLife;
@@ -527,14 +527,33 @@ class Game
   }
   
   private void changePosition(Dot food) {
-    float newXPosition = random(0, 24);
-    float newYPosition = random(0, 24);
+    boolean newPositionFound = false;
     
-    // Should not go to a position where player or enemy or the other food is located
-    
-    
-    food.x = (int) newXPosition;
-    food.y = (int) newYPosition;
+    while(!newPositionFound) {
+       // Get position and check that new position
+       int[] positions = getAndCheckPosition();
+       
+       if (positions != null) {
+         food.x = positions[0];
+         food.y = positions[1];
+         
+         // New positions found
+         newPositionFound = true; 
+       } 
+    }
+  }
+  
+  private int[] getAndCheckPosition() {
+     int newX = (int) random(0, 24);
+     int newY = (int) random(0, 24);
+     int[] newPosition = new int[2];
+      
+     if ((newX != player.x && newY != player.y) && (newX != player2.x && newY != player2.y)) {
+       newPosition[0] = newX;
+       newPosition[1] = newY;
+       return newPosition;
+     }
+     return null;
   }
 
   private void repositionFood() {
