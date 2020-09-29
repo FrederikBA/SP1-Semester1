@@ -4,10 +4,6 @@ class Keys
   private boolean aDown = false;
   private boolean sDown = false;
   private boolean dDown = false;
-  private boolean iDown = false;
-  private boolean jDown = false;
-  private boolean kDown = false;
-  private boolean lDown = false;
   private boolean arrowDown = false;
   private boolean arrowUp = false;
   private boolean arrowRight = false;
@@ -34,25 +30,6 @@ class Keys
   public boolean dDown()
   {
     return dDown;
-  }
-  public boolean iDown()
-  {
-    return iDown;
-  }
-
-  public boolean jDown()
-  {
-    return jDown;
-  }
-
-  public boolean kDown()
-  {
-    return kDown;
-  }
-
-  public boolean lDown()
-  {
-    return lDown;
   }
 
   public boolean arrowDown()
