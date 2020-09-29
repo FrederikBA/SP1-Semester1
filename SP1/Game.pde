@@ -101,16 +101,12 @@ class Game
   public void update()
   {
     if (gameEnd != true) {
-      updatePlayer();
-      updatePlayer2();
+      updatePlayers();
       updateEnemies();
-      updateEnemies2();
       updateFood();
-      updateFood2();
       checkEnemyCollisions();
       checkFoodCollisions();
-      checkPlayer1Life();
-      checkPlayer2Life();
+      checkPlayerLife();
       repositionFood();
       clearBoard();
       populateBoard();
@@ -136,7 +132,7 @@ class Game
     }
   }
 
-  private void updatePlayer()
+  private void updatePlayers()
   {
     //Update player
     if (keys.wDown())
@@ -155,11 +151,8 @@ class Game
     {
       player.moveRight();
     }
-  }
 
-  private void updatePlayer2()
-  {
-    //Update player
+    //Update player2
     if (keys.arrowUp())
     {
       player2.moveUp();
@@ -178,8 +171,10 @@ class Game
     }
   }
 
+
   private void updateEnemies()
   {
+    //Update enemies chasing player 1.
     for (int i = 0; i < enemies.length; ++i)
     {
       //Should we follow or move randomly?
@@ -232,10 +227,7 @@ class Game
         }
       }
     }
-  }
-
-  private void updateEnemies2()
-  {
+    //Update enemies chasing player 2
     for (int i = 0; i < enemies2.length; ++i)
     {
       //Should we follow or move randomly?
@@ -292,6 +284,7 @@ class Game
 
   private void updateFood()
   {
+    //Update the food fleeing from player 1.
     for (int i = 0; i < food.length; ++i)
     {
       //Should we flee or move randomly?
@@ -343,10 +336,7 @@ class Game
         }
       }
     }
-  }
-
-  private void updateFood2()
-  {
+    //Update the food fleeing from player 2.
     for (int i = 0; i < food2.length; ++i)
     {
       //Should we flee or move randomly?
@@ -399,6 +389,7 @@ class Game
       }
     }
   }
+
 
   private void populateBoard()
   {
@@ -558,20 +549,17 @@ class Game
     }
   }
 
-  private void checkPlayer1Life() {
+  private void checkPlayerLife() {
     for (int i = 0; i < 1; ++i)
 
       //We have a collision
       if (playerLife <= 0) {
         gameEnd = true;
       }
-  }
-  private void checkPlayer2Life() {
-    for (int i = 0; i < 1; ++i)
 
-      //We have a collision
-      if (player2Life <= 0) {
-        gameEnd = true;
-      }
+    //We have a collision
+    if (player2Life <= 0) {
+      gameEnd = true;
+    }
   }
 }
