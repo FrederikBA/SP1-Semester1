@@ -1,4 +1,4 @@
-import java.util.Random;
+import java.util.Random; //<>// //<>//
 
 class Game
 {
@@ -16,7 +16,7 @@ class Game
   private Dot[] food;
   private Dot[] food2;
   private boolean gameEnd;
-  private int maxLife = 100;
+  private int maxLife = 10;
 
   Game(int width, int height, int numberOfEnemies, int numberOfFood)
   {
@@ -54,8 +54,8 @@ class Game
       food2[i] = new Dot(24, 12, width/2, height/2);
     }
 
-    this.playerLife = 100;
-    this.player2Life = 100;
+    this.playerLife = 10;
+    this.player2Life = 10;
   }
 
   public int getWidth()
@@ -107,10 +107,8 @@ class Game
       updateEnemies2();
       updateFood();
       updateFood2();
-      checkEnemyCollisionsForPlayer();
-      checkEnemyCollisionsForPlayer2();
-      checkFoodCollisionForPlayer();
-      checkFoodCollisionForPlayer2();
+      checkEnemyCollisions();
+      checkFoodCollisions();
       checkPlayer1Life();
       checkPlayer2Life();
       repositionFood();
@@ -430,7 +428,7 @@ class Game
     }
   }
 
-  private void checkEnemyCollisionsForPlayer()
+  private void checkEnemyCollisions()
   {
     //Check enemy collisions for player 1.
     for (int i = 0; i < enemies.length; ++i)
@@ -440,7 +438,7 @@ class Game
         if (playerLife > 0) --playerLife;
       }
     }
-    
+
     //Check enemy2 collisions for player 1.
     for (int i = 0; i < enemies2.length; ++i)
     {
@@ -450,10 +448,6 @@ class Game
         if (playerLife > 0) --playerLife;
       }
     }
-  }
-
-  private void checkEnemyCollisionsForPlayer2()
-  {
     //Check enemy collisions for player 2.
     for (int i = 0; i < enemies.length; ++i)
     {
@@ -463,7 +457,7 @@ class Game
         if (player2Life > 0) --player2Life;
       }
     }
-    
+
     //Check enemy2 collisions for player 2.
     for (int i = 0; i < enemies2.length; ++i)
     {
@@ -475,8 +469,7 @@ class Game
     }
   }
 
-
-  private void checkFoodCollisionForPlayer() {
+  private void checkFoodCollisions() {
     //Check food collisions for player 1
     for (int i = 0; i < food.length; ++i) {
 
@@ -484,7 +477,7 @@ class Game
 
         //We have a collision
         ++playerLife;
-        
+
         changePosition(food[i]);
       }
     }
@@ -495,13 +488,10 @@ class Game
 
         //We have a collision
         ++playerLife;
-        
+
         changePosition(food2[i]);
       }
     }
-  }
-
-  private void checkFoodCollisionForPlayer2() {
     //Check food collisions for player 2
     for (int i = 0; i < food.length; ++i) {
 
@@ -509,7 +499,7 @@ class Game
 
         //We have a collision
         ++player2Life;
-        
+
         changePosition(food[i]);
       }
     }
@@ -519,41 +509,42 @@ class Game
       if (player2Life < maxLife && food2[i].getX() == player2.getX() && food2[i].getY() == player2.getY()) {
 
         //We have a collision
-        ++player2Life; //<>//
-        
+        ++player2Life;
+
         changePosition(food2[i]);
       }
-    } //<>//
-  }
-  
-  private void changePosition(Dot food) {
-    boolean newPositionFound = false;
-    
-    while(!newPositionFound) {
-       // Get position and check that new position
-       int[] positions = getAndCheckPosition();
-       
-       if (positions != null) {
-         food.x = positions[0];
-         food.y = positions[1];
-         
-         // New positions found
-         newPositionFound = true; 
-       } 
     }
   }
-  
+
+
+  private void changePosition(Dot food) {
+    boolean newPositionFound = false;
+
+    while (!newPositionFound) {
+      // Get position and check that new position
+      int[] positions = getAndCheckPosition();
+
+      if (positions != null) {
+        food.x = positions[0];
+        food.y = positions[1];
+
+        // New positions found
+        newPositionFound = true;
+      }
+    }
+  }
+
   private int[] getAndCheckPosition() {
-     int newX = (int) random(0, 24);
-     int newY = (int) random(0, 24);
-     int[] newPosition = new int[2];
-      
-     if ((newX != player.x && newY != player.y) && (newX != player2.x && newY != player2.y)) {
-       newPosition[0] = newX;
-       newPosition[1] = newY;
-       return newPosition;
-     }
-     return null;
+    int newX = (int) random(0, 24);
+    int newY = (int) random(0, 24);
+    int[] newPosition = new int[2];
+
+    if ((newX != player.x && newY != player.y) && (newX != player2.x && newY != player2.y)) {
+      newPosition[0] = newX;
+      newPosition[1] = newY;
+      return newPosition;
+    }
+    return null;
   }
 
   private void repositionFood() {
