@@ -46,7 +46,7 @@ void draw()
 void drawBoard() {
 
   int[][] board = game.getBoard();
-  if (game.gameend == false) {
+  if (game.gameEnd == false) {
     for (int y = 0; y < game.getHeight(); y++)
     {
       for (int x = 0; x < game.getWidth(); x++)

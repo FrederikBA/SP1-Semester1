@@ -15,12 +15,12 @@ class Game
   private Dot[] enemies2;
   private Dot[] food;
   private Dot[] food2;
-  private boolean gameend;
+  private boolean gameEnd;
   private int maxLife = 100;
 
   Game(int width, int height, int numberOfEnemies, int numberOfFood)
   {
-    gameend = false;
+    gameEnd = false;
     if (numberOfEnemies < 0)
     {
       throw new IllegalArgumentException("Number of enemies must be positive");
@@ -100,7 +100,7 @@ class Game
 
   public void update()
   {
-    if (gameend != true) {
+    if (gameEnd != true) {
       updatePlayer();
       updatePlayer2();
       updateEnemies();
@@ -572,7 +572,7 @@ class Game
 
       //We have a collision
       if (playerLife <= 0) {
-        gameend = true;
+        gameEnd = true;
       }
   }
   private void checkPlayer2Life() {
@@ -580,7 +580,7 @@ class Game
 
       //We have a collision
       if (player2Life <= 0) {
-        gameend = true;
+        gameEnd = true;
       }
   }
 }
